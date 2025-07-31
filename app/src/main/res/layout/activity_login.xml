@@ -19,9 +19,11 @@
 
     <EditText
         android:id="@+id/etEmail"
-        android:hint="Email"
+        android:hint="Email :"
         android:inputType="textEmailAddress"
+        android:drawableStart="@drawable/ic_email"
         android:padding="12dp"
+        android:drawablePadding="10dp"
         android:background="@drawable/bg_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,13 +31,16 @@
 
     <EditText
         android:id="@+id/etPassword"
-        android:hint="Mật khẩu"
+        android:hint="Mật khẩu :"
         android:inputType="textPassword"
+        android:drawableStart="@drawable/ic_lock"
         android:padding="12dp"
+        android:drawablePadding="10dp"
         android:background="@drawable/bg_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp" />
+
 
     <Button
         android:id="@+id/btnLogin"
