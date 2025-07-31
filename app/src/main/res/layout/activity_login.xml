@@ -21,7 +21,8 @@
         android:id="@+id/etEmail"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:background="@android:drawable/editbox_background"
+        android:padding="12dp"
+        android:background="@drawable/bg_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp" />
@@ -30,19 +31,23 @@
         android:id="@+id/etPassword"
         android:hint="Mật khẩu"
         android:inputType="textPassword"
-        android:background="@android:drawable/editbox_background"
+        android:padding="12dp"
+        android:background="@drawable/bg_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp" />
 
     <Button
         android:id="@+id/btnLogin"
-        android:text="Login"
-        android:backgroundTint="#2196F3"
-        android:textColor="#E2E2E2"
+        android:text="Đăng nhập"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/bg_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="20dp"
+        android:padding="12dp" />
+
 
     <LinearLayout
         android:orientation="horizontal"
@@ -52,6 +57,7 @@
         <TextView
             android:id="@+id/tvForgotPassword"
             android:text="Quên mật khẩu !"
+            android:textSize="20dp"
             android:textColor="#FF0008"
             android:layout_marginEnd="20dp"
             android:layout_width="wrap_content"
@@ -60,6 +66,7 @@
         <TextView
             android:id="@+id/tvRegister"
             android:text="Đăng ký"
+            android:textSize="20dp"
             android:textColor="#F44336"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
