@@ -1,35 +1,51 @@
 package com.nguyenhuunghia.nguyenhuunghia_2123110281;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    EditText etNewUsername, etNewPassword;
     Button btnRegister;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register); // Gắn với layout bạn tạo
+        setContentView(R.layout.activity_register);
 
+        etNewUsername = findViewById(R.id.etNewUsername);
+        etNewPassword = findViewById(R.id.etNewPassword);
         btnRegister = findViewById(R.id.btnRegister);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: Thực hiện validate thông tin & lưu dữ liệu (nếu cần)
+        btnRegister.setOnClickListener(v -> {
+            String newUser = etNewUsername.getText().toString().trim();
+            String newPass = etNewPassword.getText().toString().trim();
 
-                Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
-
-                // Chuyển về màn hình đăng nhập
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish(); // Đóng RegisterActivity
+            if (newUser.isEmpty() || newPass.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập đầy đủ", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            // Lưu vào SharedPreferences
+            SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("username", newUser);
+            editor.putString("password", newPass);
+            editor.apply();
+
+            Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 }

@@ -1,6 +1,7 @@
 package com.nguyenhuunghia.nguyenhuunghia_2123110281;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,10 +34,14 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            if (email.equals("nghia") && pass.equals("5")) {
-                // ✅ Thêm thông báo đăng nhập thành công
-                Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+            // Lấy tài khoản đã lưu
+            SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+            String savedUser = ((SharedPreferences) prefs).getString("username", "");
+            String savedPass = prefs.getString("password", "");
 
+            // So sánh với tài khoản đã đăng ký
+            if (email.equals(savedUser) && pass.equals(savedPass)) {
+                Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("username", email);
                 startActivity(intent);
@@ -45,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
         // Chuyển sang màn hình đăng ký
