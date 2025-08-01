@@ -6,12 +6,22 @@
     android:padding="24dp"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#FFFFFF">
+    android:background="#ffffff">
 
+    <!-- Lời chào -->
+    <TextView
+        android:id="@+id/tvGreeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chào mừng!"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Nút quay về -->
     <Button
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HI CHÀO CẬU"
-        android:textSize="55dp"/>
+        android:text="Quay về Login" />
 </LinearLayout>
