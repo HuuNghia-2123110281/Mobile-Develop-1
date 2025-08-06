@@ -18,13 +18,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Ánh xạ view
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        btnCreateAccount = findViewById(R.id.btnCreateAccount); // Lưu ý: phải có trong layout
+        btnCreateAccount = findViewById(R.id.btnCreateAccount);
 
-        // Xử lý nút đăng nhập
         btnLogin.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
             String pass = etPassword.getText().toString().trim();
@@ -34,12 +32,16 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            // Lấy tài khoản đã lưu
+            // Kiểm tra định dạng mật khẩu
+            if (!isValidPassword(pass)) {
+                Toast.makeText(this, "Mật khẩu phải từ 8–12 ký tự và bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
-            String savedUser = ((SharedPreferences) prefs).getString("username", "");
+            String savedUser = prefs.getString("username", "");
             String savedPass = prefs.getString("password", "");
 
-            // So sánh với tài khoản đã đăng ký
             if (email.equals(savedUser) && pass.equals(savedPass)) {
                 Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivity.class);
@@ -51,12 +53,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-
-        // Chuyển sang màn hình đăng ký
         btnCreateAccount.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
+    }
+
+    // Hàm kiểm tra mật khẩu hợp lệ
+    private boolean isValidPassword(String password) {
+        // Regex: 8–12 ký tự, ít nhất 1 chữ thường, 1 chữ hoa, 1 số, 1 ký tự đặc biệt
+        String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!~*()_\\-{}\\[\\]:;\"'<>,.?/\\\\|]).{8,24}$";
+        return password.matches(passwordPattern);
     }
 }
