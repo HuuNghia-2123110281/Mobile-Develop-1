@@ -1,33 +1,150 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainLayout"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
     android:orientation="vertical"
-    android:gravity="center"
-    android:background="#ffffff">
+    tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tvGreeting"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/xanh"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="Logo"
+            android:src="@drawable/logo" />
+
+        <EditText
+            android:id="@+id/edtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableRight="@drawable/ic_searchh"
+            android:drawablePadding="8dp"
+            android:hint="Tìm kiếm sản phẩm..."
+            android:paddingEnd="8dp"
+            android:textSize="14sp"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chào mừng!"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp" />
+        android:background="#FFFFFF"
+        android:padding="8dp"
+        android:scrollbars="none">
 
-    <Button
-        android:id="@+id/btnBack"
-        android:textSize="15dp"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:layout_marginBottom="22dp"
-        android:background="@drawable/bg_input"
-        android:padding="12dp"
-        android:text="Quay về Login"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Điện thoại"
+                android:textSize="10dp"
+                android:layout_marginStart="6dp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Laptop"
+                android:textSize="10dp"
+                android:layout_marginStart="8dp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tablet"
+                android:textSize="10dp"
+                android:layout_marginStart="8dp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phụ kiện"
+                android:textSize="10dp"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProducts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="4dp"
+        tools:ignore="MissingClass" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:weightSum="3"
+        android:elevation="4dp">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_home" />
+            <TextView
+                android:text="Trang chủ"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:layout_height="2dp"
+                android:layout_width="2dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_cart" />
+            <TextView
+                android:text="Giỏ hàng"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:layout_height="2dp"
+                android:layout_width="2dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_person" />
+            <TextView
+                android:text="Hồ sơ"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:layout_height="2dp"
+                android:layout_width="2dp"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText etUsername, etPassword, etConfirmPassword, etPhoneNumber;
+    EditText etUsername, etPassword, etConfirmPassword;
     Button btnRegister;
     ImageView ivTogglePassword;
     boolean isPasswordVisible = false;
@@ -37,7 +37,6 @@ public class RegisterActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etNewUsername);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
-        etPhoneNumber = findViewById(R.id.etPhoneNumber);
         btnRegister = findViewById(R.id.btnRegister);
         ivTogglePassword = findViewById(R.id.ivTogglePassword);
 
@@ -58,9 +57,8 @@ public class RegisterActivity extends AppCompatActivity {
             String username = etUsername.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
             String confirmPassword = etConfirmPassword.getText().toString().trim();
-            String phone = etPhoneNumber.getText().toString().trim();
 
-            if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || phone.isEmpty()) {
+            if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -75,17 +73,11 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            if (!isValidPhoneNumber(phone)) {
-                Toast.makeText(this, "SĐT không hợp lệ", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
             // Tạo JSON object
             JSONObject user = new JSONObject();
             try {
                 user.put("username", username);
                 user.put("password", password);
-                user.put("phone", phone);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -108,9 +100,5 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean isValidPassword(String password) {
         return password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,24}$");
-    }
-
-    private boolean isValidPhoneNumber(String phone) {
-        return phone.matches("^(03|05|07|08|09)\\d{8}$");
     }
 }

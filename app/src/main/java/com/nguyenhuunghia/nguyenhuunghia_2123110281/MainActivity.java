@@ -1,5 +1,6 @@
 package com.nguyenhuunghia.nguyenhuunghia_2123110281;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -12,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnBack;
     TextView tvGreeting;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -19,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        btnBack = findViewById(R.id.btnBack);
-        tvGreeting = findViewById(R.id.tvGreeting);
+        btnBack = findViewById(R.id.btnLogin);
+        tvGreeting = findViewById(R.id.txtWelcome);
 
 
         Intent intent = getIntent();

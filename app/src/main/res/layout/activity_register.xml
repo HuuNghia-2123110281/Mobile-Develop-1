@@ -25,17 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:drawableStart="@drawable/ic_person"/>
-    <EditText
-        android:id="@+id/etPhoneNumber"
-        android:hint="Số điện thoại"
-        android:inputType="phone"
-        android:padding="12dp"
-        android:drawablePadding="10dp"
-        android:background="@drawable/bg_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:drawableStart="@drawable/ic_phone" />
 
 
     <RelativeLayout

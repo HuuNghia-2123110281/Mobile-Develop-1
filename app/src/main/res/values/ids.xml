@@ -3,4 +3,7 @@
     <item name="tvCreateAccount" type="id" />
     <item name="etNewPassword" type="id" />
     <item name="etNewUsername" type="id" />
+    <item name="edtUsername" type="id" />
+    <item name="edtPassword" type="id" />
+    <item name="btnGoToRegister" type="id" />
 </resources>
