@@ -6,4 +6,12 @@
     <item name="edtUsername" type="id" />
     <item name="edtPassword" type="id" />
     <item name="btnGoToRegister" type="id" />
+    <item name="txtWelcome" type="id" />
+    <item name="rvProducts" type="id" />
+    <item name="edtSearch" type="id" />
+    <item name="ivProduct" type="id" />
+    <item name="tvProductName" type="id" />
+    <item name="btnBack" type="id" />
+    <item name="txtProductName" type="id" />
+    <item name="txtProductPrice" type="id" />
 </resources>

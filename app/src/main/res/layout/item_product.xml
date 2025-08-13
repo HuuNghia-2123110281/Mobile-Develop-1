@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="8dp">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/iphone15promax" />
+
+    <TextView
+        android:id="@+id/txtName1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iphone 15 ProMax"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtPrice1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="27.390.000VND" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/iphone15" />
+
+    <TextView
+        android:id="@+id/txtName2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iphone 15"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtPrice2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="15,490,000 VND" />
+</LinearLayout>

@@ -4,6 +4,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/txtWelcome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Chào mừng"
+            android:textSize="20dp"
+            android:textColor="@color/xanh"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đăng xuất"
+            android:backgroundTint="@color/red"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,23 +80,23 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
                 android:text="Laptop"
-                android:textSize="10dp"
-                android:layout_marginStart="8dp"/>
+                android:textSize="10dp" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tablet"
                 android:textSize="10dp"
-                android:layout_marginStart="8dp"/>
+                android:layout_marginStart="6dp"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Phụ kiện"
                 android:textSize="10dp"
-                android:layout_marginStart="8dp"/>
+                android:layout_marginStart="6dp"/>
         </LinearLayout>
     </HorizontalScrollView>
 
