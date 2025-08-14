@@ -1,52 +1,55 @@
 package com.nguyenhuunghia.nguyenhuunghia_2123110281;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+public class ProductAdapter extends BaseAdapter {
 
-    private ArrayList<Product> productList;
+    private Context context;
+    private ArrayList<Product> products;
 
-    public ProductAdapter(ArrayList<Product> productList) {
-        this.productList = productList;
-    }
-
-    @NonNull
-    @Override
-    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_product, parent, false);
-        return new ProductViewHolder(view);
+    public ProductAdapter(Context context, ArrayList<Product> products) {
+        this.context = context;
+        this.products = products;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product product = productList.get(position);
-        holder.txtName.setText(product.getName());
-        holder.txtPrice.setText(NumberFormat.getInstance(new Locale("vi", "VN"))
-                .format(product.getPrice()) + " ₫");
+    public int getCount() {
+        return products.size();
     }
 
     @Override
-    public int getItemCount() {
-        return productList.size();
+    public Object getItem(int position) {
+        return products.get(position);
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView txtName, txtPrice;
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
-        public ProductViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtName = itemView.findViewById(R.id.txtProductName);
-            txtPrice = itemView.findViewById(R.id.txtProductPrice);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_product, parent, false);
         }
+
+        Product product = products.get(position);
+
+        TextView tvName = convertView.findViewById(R.id.tvProductName);
+        TextView tvPrice = convertView.findViewById(R.id.tvProductPrice);
+
+        tvName.setText(product.getName());
+        tvPrice.setText(NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(product.getPrice()));
+
+        return convertView;
     }
 }

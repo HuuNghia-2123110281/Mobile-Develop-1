@@ -14,4 +14,8 @@
     <item name="btnBack" type="id" />
     <item name="txtProductName" type="id" />
     <item name="txtProductPrice" type="id" />
+    <item name="tvProductPrice" type="id" />
+    <item name="recyclerView" type="id" />
+    <item name="tvProductPriceDetail" type="id" />
+    <item name="tvProductDescription" type="id" />
 </resources>
