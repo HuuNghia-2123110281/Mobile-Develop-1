@@ -1,19 +1,37 @@
 package com.nguyenhuunghia.nguyenhuunghia_2123110281;
 
-public class Product {
-    private String name;
-    private int price;
-    private String description; // ✅ Thêm mô tả
+import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
-    public Product(String name, int price, String description) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
+public class Product implements Serializable {
+
+    @SerializedName("id")
+    private String id;
+
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("price")
+    private double price;
+
+
+    @SerializedName("avatar")
+    private String ImageUrl;
+
+    public String getId() {
+        return id;
     }
 
-    // Getter
-    public String getName() { return name; }
-    public int getPrice() { return price; }
-    public String getDescription() { return description; }
-}
+    public String getName() {
+        return name != null ? name : "";
+    }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public String getImageUrl() {
+        // tránh null pointer
+        return ImageUrl != null ? ImageUrl : "";
+    }
+}

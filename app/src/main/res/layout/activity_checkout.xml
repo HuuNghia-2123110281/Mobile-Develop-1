@@ -1,7 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:orientation="vertical"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvCheckoutTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thanh toán"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
+
+
+
+    <EditText
+        android:id="@+id/edtname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Họ và tên người nhận"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:background="@android:drawable/edit_text" />
+    <EditText
+        android:id="@+id/edtphone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="SĐT nhận hàng"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:background="@android:drawable/edit_text" />
+    <EditText
+        android:id="@+id/edtAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhập địa chỉ giao hàng"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:background="@android:drawable/edit_text" />
+
+    <TextView
+        android:id="@+id/tvCheckoutSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tổng tiền: 0 VNĐ"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnConfirmPayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xác nhận thanh toán"
+        android:textColor="@color/white"
+        android:background="@color/red"
+        android:textSize="20dp"
+        android:layout_marginTop="24dp"/>
 
 </LinearLayout>

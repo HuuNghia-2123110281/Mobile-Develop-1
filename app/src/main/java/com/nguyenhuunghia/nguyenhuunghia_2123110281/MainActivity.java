@@ -1,76 +1,108 @@
 package com.nguyenhuunghia.nguyenhuunghia_2123110281;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE = 100;
-
-    Button btnBack;
     TextView tvGreeting;
-    RecyclerView rvProducts;
+    Button btnBack;
+    RecyclerView rv;
+    ProductAdapter adapter;
+    ArrayList<Product> products;
 
+    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Xin quyền
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
-                    REQUEST_CODE);
-        }
-
-        // Ánh xạ view
-        btnBack = findViewById(R.id.btnBack);
         tvGreeting = findViewById(R.id.txtWelcome);
-        rvProducts = findViewById(R.id.rvProducts); // Đảm bảo ID trong layout là rvProducts
-
-        // Cấu hình RecyclerView
-        rvProducts.setLayoutManager(new GridLayoutManager(this, 2)); // 2 cột
-
-
-        // Tạo dữ liệu sản phẩm
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product("iPhone 15", 17390000 ,"128GB/6.1in/60hz"));
-        products.add(new Product("iPhone 15 PROMAX", 27490000 ,"256GB/6.7in/120hz"));
-        products.add(new Product("LapTop ASUS Gaming", 32490000,"FA506NFR R7 7435HS/16GB/512GB/4GB RTX2050/144Hz/Win11"));
-        products.add(new Product("LapTop ASUS Vivobook", 27390000 ,"OLED A1505VA i5 13500H/16GB/512GB/120Hz/Win11"));
-
-        // Gán adapter cho RecyclerView
-        ProductRecyclerAdapter adapter = new ProductRecyclerAdapter(products);
-        rvProducts.setAdapter(adapter);
+        btnBack = findViewById(R.id.btnBack);
+        rv = findViewById(R.id.rvProducts);
 
         // Hiển thị lời chào
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
-        if (username != null && !username.isEmpty()) {
+        String username = getIntent().getStringExtra("username");
+        if (username != null && !username.trim().isEmpty()) {
             tvGreeting.setText("Chào mừng, " + username + " !");
         } else {
-            tvGreeting.setText("Chào mừng, khách !");
+            tvGreeting.setText("Chào mừng bạn!");
         }
 
-        // Nút quay lại
+        // Khởi tạo danh sách sản phẩm
+        products = new ArrayList<>();
+        adapter = new ProductAdapter(products, new ProductAdapter.OnProductActionListener() {
+            @Override
+            public void onAddToCart(Product p) {
+                CartManager.getInstance().addToCart(p, 1);
+                Toast.makeText(MainActivity.this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onOpenDetail(Product p) {
+                Intent i = new Intent(MainActivity.this, ProductDetailActivity.class);
+                i.putExtra("product", p);
+                startActivity(i);
+            }
+        });
+
+
+        // RecyclerView
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setAdapter(adapter);
+
+        // Gọi API lấy danh sách sản phẩm
+        loadProductsFromApi();
+
+        // Nút quay lại Login
         btnBack.setOnClickListener(v -> {
-            Intent backIntent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(backIntent);
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
+        });
+
+        // Icon giỏ hàng
+        LinearLayout ivCartLayout = findViewById(R.id.ivCart);
+        ivCartLayout.setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, CartActivity.class);
+            startActivity(i);
+        });
+    }
+
+    private void loadProductsFromApi() {
+        ApiService.apiService.getProducts().enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    products.clear();
+                    products.addAll(response.body());
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(MainActivity.this, "Không lấy được sản phẩm", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Log.e("API_ERROR", t.getMessage(), t);
+                Toast.makeText(MainActivity.this, "Lỗi kết nối API", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

@@ -1,44 +1,57 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp"
-    android:background="#FFFFFF"
-    android:layout_margin="4dp"
-    android:gravity="center_horizontal"
-    android:elevation="2dp">
+    android:layout_margin="8dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
 
-    <ImageView
-        android:id="@+id/imgProduct"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/iphone15" />
+    <LinearLayout
+        android:padding="12dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvProductName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tên sản phẩm"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginTop="6dp" />
+        <ImageView
+            android:id="@+id/imgProduct"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/iphone15" />
 
-    <TextView
-        android:id="@+id/tvProductPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Giá: ..."
-        android:textColor="#FF5722"
-        android:textSize="13sp"
-        android:gravity="center" />
+        <LinearLayout
+            android:layout_marginStart="12dp"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-    <ImageView
-        android:id="@+id/btnAddToCart"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_cart"
-        android:contentDescription="Thêm vào giỏ hàng" />
-</LinearLayout>
+            <TextView
+                android:id="@+id/tvProductName"
+                android:text="Tên sản phẩm"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvProductPrice"
+                android:text="0 ₫"
+                android:textSize="14sp"
+                android:textColor="#FF5722"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAddToCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

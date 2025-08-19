@@ -18,4 +18,17 @@
     <item name="recyclerView" type="id" />
     <item name="tvProductPriceDetail" type="id" />
     <item name="tvProductDescription" type="id" />
+    <item name="recyclerViewCart" type="id" />
+    <item name="imgCartProduct" type="id" />
+    <item name="tvCartName" type="id" />
+    <item name="tvCartQty" type="id" />
+    <item name="tvCartPrice" type="id" />
+    <item name="btnMinus" type="id" />
+    <item name="btnPlus" type="id" />
+    <item name="btnRemove" type="id" />
+    <item name="ivCart" type="id" />
+    <item name="rvCart" type="id" />
+    <item name="tvCartTotal" type="id" />
+    <item name="tvName" type="id" />
+    <item name="tvPrice" type="id" />
 </resources>
