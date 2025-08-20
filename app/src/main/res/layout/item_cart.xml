@@ -1,73 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="12dp"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/imgCartProduct"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/iphone15"/>
-
-    <LinearLayout
-        android:layout_marginStart="10dp"
-        android:orientation="vertical"
+    <!-- Tên sản phẩm -->
+    <TextView
+        android:id="@+id/tvProductName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="2"
+        android:text="Tên sản phẩm"
+        android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tvCartName"
-            android:text="Tên sản phẩm"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+    <!-- Giá sản phẩm -->
+    <TextView
+        android:id="@+id/tvProductPrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="100000"
+        android:textSize="16sp"
+        android:gravity="center" />
 
-        <TextView
-            android:id="@+id/tvCartPrice"
-            android:text="0 ₫"
-            android:textColor="#FF5722"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+    <!-- Nút trừ -->
+    <Button
+        android:id="@+id/btnMinus"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="-" />
 
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <!-- Số lượng -->
+    <TextView
+        android:id="@+id/tvQuantity"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="16sp" />
 
-        <ImageButton
-            android:id="@+id/btnMinus"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:contentDescription="minus"
-            android:src="@android:drawable/ic_media_previous"/>
+    <!-- Nút cộng -->
+    <Button
+        android:id="@+id/btnPlus"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="+" />
 
-        <TextView
-            android:id="@+id/tvCartQty"
-            android:text="x1"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <ImageButton
-            android:id="@+id/btnPlus"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:contentDescription="plus"
-            android:src="@android:drawable/ic_media_next"/>
-
-        <ImageButton
-            android:id="@+id/btnRemove"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:contentDescription="remove"
-            android:src="@android:drawable/ic_menu_delete"/>
-    </LinearLayout>
 </LinearLayout>

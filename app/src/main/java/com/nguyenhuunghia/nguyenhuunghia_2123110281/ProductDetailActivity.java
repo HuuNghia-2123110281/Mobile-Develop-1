@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -49,10 +50,10 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         // Thêm vào giỏ
         btnAddToCart.setOnClickListener(v -> {
-            if (currentProduct != null) {
-                CartManager.getInstance().addToCart(currentProduct, 1); // 1 sản phẩm
-            }
+            CartManager.getInstance().addToCart(currentProduct);
+            Toast.makeText(this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
         });
+
 
         // Mua ngay → sang trang thanh toán
         btnBuyNow.setOnClickListener(v -> {

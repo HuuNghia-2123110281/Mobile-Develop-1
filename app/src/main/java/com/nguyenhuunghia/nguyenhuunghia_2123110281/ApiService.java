@@ -11,10 +11,14 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface ApiService {
     @GET("product")
     Call<List<Product>> getProducts();
+    @GET("users/{id}")
+    Call<User> getUserById(@Path("id") int id);
+
 
     ApiService apiService = new Retrofit.Builder()
             .baseUrl("https://68931a76c49d24bce869717c.mockapi.io/")

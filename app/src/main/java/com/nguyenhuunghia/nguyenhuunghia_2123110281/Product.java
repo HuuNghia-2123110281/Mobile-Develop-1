@@ -15,8 +15,9 @@ public class Product implements Serializable {
     private double price;
 
 
-    @SerializedName("avatar")
+    @SerializedName("imageUrl")
     private String ImageUrl;
+
 
     public String getId() {
         return id;

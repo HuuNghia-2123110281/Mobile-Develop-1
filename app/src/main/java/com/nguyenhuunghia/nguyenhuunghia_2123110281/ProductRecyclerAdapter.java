@@ -51,8 +51,8 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         String name = product.getName().toLowerCase();
         if (name.contains("promax")) {
             holder.imgProduct.setImageResource(R.drawable.iphone15promax);
-        } else if (name.contains("14promax")) {
-            holder.imgProduct.setImageResource(R.drawable.iphone14promax);
+        } else if (name.contains("15")) {
+            holder.imgProduct.setImageResource(R.drawable.iphone15);
         }else if (name.contains("gaming")) {
             holder.imgProduct.setImageResource(R.drawable.laptopasusgaming);
         } else if (name.contains("vivobook")) {
@@ -73,7 +73,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgProduct = itemView.findViewById(R.id.imgProduct);
+            imgProduct = itemView.findViewById(R.id.imgCartProduct);
             tvName = itemView.findViewById(R.id.tvProductName);
             tvPrice = itemView.findViewById(R.id.tvProductPrice);
         }

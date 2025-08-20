@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imgProduct"
+            android:id="@+id/imgCartProduct"
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:scaleType="centerCrop"

@@ -1,99 +1,78 @@
 package com.nguyenhuunghia.nguyenhuunghia_2123110281;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
-import com.bumptech.glide.Glide;
 
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
+    private Context context;
+    private List<CartItem> cartItems;
+    private OnCartChangeListener listener;
 
-    public interface OnCartChange {
-        void onRemove(int position);
-        void onDataChanged();
+    public interface OnCartChangeListener {
+        void onCartChanged();
     }
 
-    private final List<CartItem> data;
-    private final OnCartChange cb;
-
-    public CartAdapter(List<CartItem> data, OnCartChange cb) {
-        this.data = data;
-        this.cb = cb;
+    public CartAdapter(Context context, List<CartItem> cartItems, OnCartChangeListener listener) {
+        this.context = context;
+        this.cartItems = cartItems;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_cart, parent, false);
-        return new VH(v);
+    public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_cart, parent, false);
+        return new CartViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH h, int position) {
-        CartItem ci = data.get(position);
+    public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
+        CartItem item = cartItems.get(position);
+        holder.tvName.setText(item.getProduct().getName());
+        holder.tvPrice.setText(item.getProduct().getPrice() + " đ");
+        holder.tvQty.setText(String.valueOf(item.getQuantity()));
 
-        // Load ảnh từ URL bằng Glide
-        Glide.with(h.img.getContext())
-                .load(ci.getProduct().getImageUrl())
-                .into(h.img);
-
-        h.tvName.setText(ci.getProduct().getName());
-        h.tvQty.setText("x" + ci.getQuantity());
-        h.tvPrice.setText(formatVND(ci.getSubtotal()));
-
-        h.btnMinus.setOnClickListener(v -> {
-            ci.decrease();
-            notifyItemChanged(h.getBindingAdapterPosition());
-            if (cb != null) cb.onDataChanged();
+        // Nút tăng
+        holder.btnPlus.setOnClickListener(v -> {
+            item.increase();
+            holder.tvQty.setText(String.valueOf(item.getQuantity()));
+            if (listener != null) listener.onCartChanged();
         });
 
-        h.btnPlus.setOnClickListener(v -> {
-            ci.increase();
-            notifyItemChanged(h.getBindingAdapterPosition());
-            if (cb != null) cb.onDataChanged();
-        });
-
-        h.btnRemove.setOnClickListener(v -> {
-            if (cb != null) cb.onRemove(h.getBindingAdapterPosition());
+        // Nút giảm
+        holder.btnMinus.setOnClickListener(v -> {
+            item.decrease();
+            holder.tvQty.setText(String.valueOf(item.getQuantity()));
+            if (listener != null) listener.onCartChanged();
         });
     }
-
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return cartItems.size();
     }
 
-    static class VH extends RecyclerView.ViewHolder {
-        ImageView img;
-        TextView tvName, tvQty, tvPrice;
-        ImageButton btnMinus, btnPlus, btnRemove;
+    public static class CartViewHolder extends RecyclerView.ViewHolder {
+        TextView tvName, tvPrice, tvQty;
+        Button btnPlus, btnMinus;
 
-        VH(@NonNull View itemView) {
+        public CartViewHolder(@NonNull View itemView) {
             super(itemView);
-            img = itemView.findViewById(R.id.imgCartProduct);
-            tvName = itemView.findViewById(R.id.tvCartName);
-            tvQty = itemView.findViewById(R.id.tvCartQty);
-            tvPrice = itemView.findViewById(R.id.tvCartPrice);
-            btnMinus = itemView.findViewById(R.id.btnMinus);
+            tvName = itemView.findViewById(R.id.tvProductName);
+            tvPrice = itemView.findViewById(R.id.tvProductPrice);
+            tvQty = itemView.findViewById(R.id.tvQuantity);
             btnPlus = itemView.findViewById(R.id.btnPlus);
-            btnRemove = itemView.findViewById(R.id.btnRemove);
+            btnMinus = itemView.findViewById(R.id.btnMinus);
         }
-    }
-
-    private String formatVND(long v) {
-        NumberFormat f = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-        return f.format(v);
     }
 }

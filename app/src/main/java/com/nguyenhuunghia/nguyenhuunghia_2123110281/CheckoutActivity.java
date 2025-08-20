@@ -35,7 +35,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 Toast.makeText(this, "Vui lòng nhập địa chỉ giao hàng", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_LONG).show();
-                CartActivity.clearCart(); // Xóa giỏ hàng sau khi thanh toán
+                CartManager.getInstance().clearCart(); // Xóa giỏ hàng sau khi thanh toán
                 finish();
             }
         });

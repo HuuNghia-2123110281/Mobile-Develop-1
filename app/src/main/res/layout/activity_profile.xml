@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center_horizontal">
+
+    <!-- Ảnh đại diện -->
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_person"
+        android:scaleType="centerCrop"
+        android:background="@color/xanh"
+        android:padding="4dp" />
+
+    <!-- Tên -->
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nguyen Huu Nghia"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:layout_marginTop="12dp" />
+
+    <!-- Email -->
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="nghia@example.com"
+        android:textSize="26sp"
+        android:layout_marginTop="6dp" />
+
+    <!-- Số điện thoại -->
+    <TextView
+        android:id="@+id/tvPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+84 123456789"
+        android:textSize="26sp"
+        android:layout_marginTop="6dp" />
+
+    <!-- Nút chỉnh sửa -->
+    <Button
+        android:id="@+id/btnEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chỉnh sửa hồ sơ"
+        android:layout_marginTop="20dp" />
+
+    <!-- Nút đăng xuất -->
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đăng xuất"
+        android:background="@color/red"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>

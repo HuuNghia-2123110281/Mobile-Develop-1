@@ -1,47 +1,91 @@
 package com.nguyenhuunghia.nguyenhuunghia_2123110281;
 
-import com.nguyenhuunghia.nguyenhuunghia_2123110281.CartItem;
-import com.nguyenhuunghia.nguyenhuunghia_2123110281.Product;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartManager {
     private static CartManager instance;
-    private final List<CartItem> items = new ArrayList<>();
+    private List<CartItem> cartItems;
 
-    private CartManager() {}
+    private CartManager() {
+        cartItems = new ArrayList<>();
+    }
 
-    public static synchronized CartManager getInstance() {
-        if (instance == null) instance = new CartManager();
+    public static CartManager getInstance() {
+        if (instance == null) {
+            instance = new CartManager();
+        }
         return instance;
     }
 
-    public void add(Product product) {
-        for (CartItem ci : items) {
-            if (ci.getProduct().getName().equals(product.getName())) {
-                ci.increase();
+    // ================== QUẢN LÝ GIỎ HÀNG ==================
+
+    // Thêm sản phẩm với số lượng mặc định = 1
+    public void addToCart(Product product) {
+        addToCart(product, 1);
+    }
+
+    // Thêm sản phẩm với số lượng chỉ định
+    public void addToCart(Product product, int quantity) {
+        for (CartItem item : cartItems) {
+            if (item.getProduct().getId().equals(product.getId())) {
+                item.setQuantity(item.getQuantity() + quantity);
                 return;
             }
         }
-        items.add(new CartItem(product));
+        cartItems.add(new CartItem(product, quantity));
     }
 
-    public void removeAt(int position) {
-        if (position >= 0 && position < items.size()) items.remove(position);
+    // Tăng số lượng sản phẩm trong giỏ
+    public void increaseQuantity(Product product) {
+        for (CartItem item : cartItems) {
+            if (item.getProduct().getId().equals(product.getId())) {
+                item.setQuantity(item.getQuantity() + 1);
+                return;
+            }
+        }
     }
 
-    public List<CartItem> getItems() { return items; }
-
-    public long getTotal() {
-        long sum = 0;
-        for (CartItem ci : items) sum += ci.getSubtotal();
-        return sum;
+    // Giảm số lượng sản phẩm trong giỏ
+    public void decreaseQuantity(Product product) {
+        for (CartItem item : cartItems) {
+            if (item.getProduct().getId().equals(product.getId())) {
+                if (item.getQuantity() > 1) {
+                    item.setQuantity(item.getQuantity() - 1);
+                } else {
+                    cartItems.remove(item);
+                }
+                return;
+            }
+        }
     }
 
-    public void clear() { items.clear(); }
+    // Xóa sản phẩm khỏi giỏ
+    public void removeFromCart(Product product) {
+        for (CartItem item : cartItems) {
+            if (item.getProduct().getId().equals(product.getId())) {
+                cartItems.remove(item);
+                return;
+            }
+        }
+    }
 
-    public void addToCart(Product currentProduct, int i) {
+    // Lấy toàn bộ giỏ hàng
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
 
+    // Xóa toàn bộ giỏ hàng
+    public void clearCart() {
+        cartItems.clear();
+    }
+
+    // Tính tổng tiền giỏ hàng
+    public double getTotalPrice() {
+        double total = 0;
+        for (CartItem item : cartItems) {
+            total += item.getQuantity() * item.getProduct().getPrice();
+        }
+        return total;
     }
 }
