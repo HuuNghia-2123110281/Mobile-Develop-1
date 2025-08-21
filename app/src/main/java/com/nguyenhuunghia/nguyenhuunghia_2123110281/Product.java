@@ -18,6 +18,12 @@ public class Product implements Serializable {
     @SerializedName("imageUrl")
     private String ImageUrl;
 
+    @SerializedName("desc")
+    private String desc;
+
+    public String getDesc() {
+        return desc != null ? desc : "";
+    }
 
     public String getId() {
         return id;
@@ -35,4 +41,5 @@ public class Product implements Serializable {
         // tránh null pointer
         return ImageUrl != null ? ImageUrl : "";
     }
+
 }

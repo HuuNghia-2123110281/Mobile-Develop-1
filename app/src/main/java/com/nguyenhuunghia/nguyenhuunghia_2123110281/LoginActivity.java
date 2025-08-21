@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         boolean found = false;
+                        JSONObject currentUser = null;
 
                         for (int i = 0; i < response.length(); i++) {
                             try {
@@ -77,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if (username.equals(apiUser) && password.equals(apiPass)) {
                                     found = true;
+                                    currentUser = user; // Lưu user JSON để gửi đi
                                     break;
                                 }
                             } catch (JSONException e) {
@@ -84,14 +86,25 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
 
-                        if (found) {
+                        if (found && currentUser != null) {
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+
+                            // Truyền toàn bộ thông tin user sang MainActivity (hoặc ProfileActivity)
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("username", username); // Gửi username sang MainActivity
+                            try {
+                                intent.putExtra("id", currentUser.getString("id"));
+                                intent.putExtra("username", currentUser.getString("username"));
+                                intent.putExtra("password", currentUser.getString("password"));
+                                if (currentUser.has("email")) {
+                                    intent.putExtra("email", currentUser.getString("email"));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                             startActivity(intent);
                             finish();
-                        }
-                        else {
+                        } else {
                             Toast.makeText(LoginActivity.this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -105,4 +118,5 @@ public class LoginActivity extends AppCompatActivity {
 
         Volley.newRequestQueue(LoginActivity.this).add(request);
     }
+
 }

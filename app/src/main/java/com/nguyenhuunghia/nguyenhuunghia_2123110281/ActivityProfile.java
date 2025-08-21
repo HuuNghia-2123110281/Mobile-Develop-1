@@ -1,97 +1,88 @@
 package com.nguyenhuunghia.nguyenhuunghia_2123110281;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import org.json.JSONException;
 
 public class ActivityProfile extends AppCompatActivity {
 
-    private ImageView imgAvatar;
-    private TextView tvName, tvEmail, tvPhone;
-    private Button btnEdit, btnLogout;
+    TextView tvUsername, tvPhone;
+    Button btnEdit, btnLogout;
 
-    private ApiService apiService;
-    private int userId;
+    String apiUrl = "https://68931a76c49d24bce869717c.mockapi.io/users/";
+    String userId; // Lấy từ Intent
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        imgAvatar = findViewById(R.id.imgAvatar);
-        tvName = findViewById(R.id.tvName);
-        tvEmail = findViewById(R.id.tvEmail);
+        tvUsername = findViewById(R.id.tvUser);
         tvPhone = findViewById(R.id.tvPhone);
-        btnEdit = findViewById(R.id.btnEdit);
+        btnEdit = findViewById(R.id.btnEditProfile);
         btnLogout = findViewById(R.id.btnLogout);
 
-        apiService = APIClient.getClient().create(ApiService.class);
+        // Lấy userId từ Intent (truyền từ LoginActivity/RegisterActivity)
+        userId = getIntent().getStringExtra("userId");
 
-        // Lấy userId đã lưu khi đăng nhập
-        SharedPreferences prefs = getSharedPreferences("APP_PREFS", MODE_PRIVATE);
-        userId = prefs.getInt("USER_ID", -1);
-
-        if (userId != -1) {
+        if (userId != null) {
             loadUserProfile(userId);
         } else {
             Toast.makeText(this, "Không tìm thấy thông tin người dùng", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
-        // Bấm vào Edit
+        // Chuyển sang trang EditProfile
         btnEdit.setOnClickListener(v -> {
-            Intent intent = new Intent(ActivityProfile.this, EditProfileActivity.class);
+            Intent intent = new Intent(ActivityProfile.this, EditActivityProfile.class);
+            intent.putExtra("userId", userId);
             startActivity(intent);
         });
 
-        // Bấm vào Logout
+        // Logout -> xóa dữ liệu + quay lại LoginActivity
         btnLogout.setOnClickListener(v -> {
-            // Xóa session
-            prefs.edit().clear().apply();
-
-            Intent intent = new Intent(ActivityProfile.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            getSharedPreferences("user_prefs", MODE_PRIVATE)
+                    .edit()
+                    .clear()
+                    .apply();
+            startActivity(new Intent(ActivityProfile.this, LoginActivity.class));
             finish();
         });
     }
 
-    private void loadUserProfile(int userId) {
-        apiService.getUserById(userId).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    User user = response.body();
-                    tvName.setText(user.getName());
+    private void loadUserProfile(String id) {
+        String url = apiUrl + id;
 
-                    Glide.with(ActivityProfile.this)
-                            .load(user.getAvatar())
-                            .placeholder(R.drawable.ic_placehoder)
-                            .error(R.drawable.ic_error)
-                            .into(imgAvatar);
-                } else {
-                    Toast.makeText(ActivityProfile.this, "Không tải được hồ sơ", Toast.LENGTH_SHORT).show();
-                }
-            }
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        String username = response.getString("username");
+                        String phone = response.getString("phone");
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(ActivityProfile.this, "Lỗi kết nối API", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+                        tvUsername.setText("Tên: " + username);
+                        tvPhone.setText("SĐT: " + phone);
 
-    private class EditProfileActivity {
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(this, "Lỗi tải hồ sơ: " + error.getMessage(), Toast.LENGTH_SHORT).show()
+        );
+
+        queue.add(request);
     }
 }

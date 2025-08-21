@@ -18,10 +18,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private List<CartItem> cartItems;
     private OnCartChangeListener listener;
 
+    // Interface để CartActivity có thể lắng nghe khi giỏ hàng thay đổi
     public interface OnCartChangeListener {
         void onCartChanged();
     }
 
+    // Constructor nhận listener từ CartActivity
     public CartAdapter(Context context, List<CartItem> cartItems, OnCartChangeListener listener) {
         this.context = context;
         this.cartItems = cartItems;
@@ -38,6 +40,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         CartItem item = cartItems.get(position);
+
         holder.tvName.setText(item.getProduct().getName());
         holder.tvPrice.setText(item.getProduct().getPrice() + " đ");
         holder.tvQty.setText(String.valueOf(item.getQuantity()));

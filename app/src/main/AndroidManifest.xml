@@ -56,6 +56,10 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!-- ActivityProfile -->
+        <activity android:name=".ActivityProfile" />
+
+
     </application>
 
 </manifest>

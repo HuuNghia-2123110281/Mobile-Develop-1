@@ -3,8 +3,11 @@ package com.nguyenhuunghia.nguyenhuunghia_2123110281;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvGreeting;
     Button btnBack;
+    EditText edtSearch;
     RecyclerView rv;
     ProductAdapter adapter;
     ArrayList<Product> products;
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         tvGreeting = findViewById(R.id.txtWelcome);
         btnBack = findViewById(R.id.btnBack);
+        edtSearch = findViewById(R.id.edtSearch);
         rv = findViewById(R.id.rvProducts);
 
         // Hiển thị lời chào
@@ -63,12 +68,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        // RecyclerView
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
 
-        // Gọi API lấy danh sách sản phẩm
         loadProductsFromApi();
 
         // Nút quay lại Login
@@ -82,6 +84,27 @@ public class MainActivity extends AppCompatActivity {
         ivCartLayout.setOnClickListener(v -> {
             Intent i = new Intent(MainActivity.this, CartActivity.class);
             startActivity(i);
+        });
+
+        // Icon hồ sơ
+        LinearLayout ivPersonLayout = findViewById(R.id.ivPerson);
+        ivPersonLayout.setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, ActivityProfile.class);
+            startActivity(i);
+        });
+
+        // Tìm kiếm sản phẩm theo tên
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterProducts(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
         });
     }
 
@@ -104,5 +127,16 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Lỗi kết nối API", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // Lọc danh sách sản phẩm theo tên
+    private void filterProducts(String keyword) {
+        List<Product> filteredList = new ArrayList<>();
+        for (Product p : products) {
+            if (p.getName().toLowerCase().contains(keyword.toLowerCase())) {
+                filteredList.add(p);
+            }
+        }
+        adapter.updateData(filteredList);
     }
 }

@@ -7,20 +7,34 @@
 
     <!-- Danh sách giỏ hàng -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerCart"
+        android:id="@+id/recyclerViewCart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!-- Tổng tiền -->
-    <TextView
-        android:id="@+id/tvTotal"
+    <!-- Tổng tiền + Nút thanh toán -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tổng tiền: 0 VND"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:gravity="end"
-        android:padding="8dp" />
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvTotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng tiền: 0đ"
+            android:textSize="22sp"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/btnCheckout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thanh toán"
+            android:textColor="@android:color/white"
+            android:background="@color/red"
+            android:layout_marginTop="12dp"/>
+    </LinearLayout>
 
 </LinearLayout>

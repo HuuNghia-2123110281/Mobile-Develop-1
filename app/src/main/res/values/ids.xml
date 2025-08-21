@@ -31,4 +31,9 @@
     <item name="tvCartTotal" type="id" />
     <item name="tvName" type="id" />
     <item name="tvPrice" type="id" />
+    <item name="etPhone" type="id" />
+    <item name="btnEditProfile" type="id" />
+    <item name="tvUser" type="id" />
+    <item name="recyclerCart" type="id" />
+    <item name="tvTotal" type="id" />
 </resources>

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,52 +15,59 @@ import java.util.Locale;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
-    ImageView img;
-    TextView tvName, tvPrice, tvDesc;
-    Button btnAddToCart, btnBuyNow;
-    private Product currentProduct;
+    private ImageView img;
+    private TextView tvName, tvPrice, tvDescription;
+    private Button btnAddToCart, btnAddBill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
 
+        // Ánh xạ view
         img = findViewById(R.id.imgProductDetail);
         tvName = findViewById(R.id.tvProductNameDetail);
         tvPrice = findViewById(R.id.tvProductPriceDetail);
-        tvDesc = findViewById(R.id.tvProductDescription);
+        tvDescription = findViewById(R.id.tvProductDescription);
         btnAddToCart = findViewById(R.id.btnAddToCart);
-        btnBuyNow = findViewById(R.id.btnAddBill);
+        btnAddBill = findViewById(R.id.btnAddBill);
 
-        Product p = (Product) getIntent().getSerializableExtra("product");
-        if (p != null) {
-            currentProduct = p;
+        // Nhận Product từ Intent
+        Product product = (Product) getIntent().getSerializableExtra("product");
 
-            // Load ảnh từ URL
+        if (product != null) {
+            tvName.setText(product.getName());
+            tvDescription.setText(product.getDesc());
+
+            NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+            if (product.getPrice() > 0) {
+                tvPrice.setText(formatter.format(product.getPrice()));
+            } else {
+                tvPrice.setText("Liên hệ");
+            }
+
             Glide.with(this)
-                    .load(p.getImageUrl())
+                    .load(product.getImageUrl())
+                    .placeholder(R.drawable.ic_placehoder)
+                    .error(R.drawable.ic_error)
                     .into(img);
 
-            tvName.setText(p.getName());
-            tvPrice.setText(NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(p.getPrice()));
-            tvDesc.setText("Mô tả sản phẩm đang cập nhật...");
-        }
-
-
-        // Thêm vào giỏ
-        btnAddToCart.setOnClickListener(v -> {
-            CartManager.getInstance().addToCart(currentProduct);
-            Toast.makeText(this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-        });
-
-
-        // Mua ngay → sang trang thanh toán
-        btnBuyNow.setOnClickListener(v -> {
-            if (currentProduct != null) {
-                CartManager.getInstance().addToCart(currentProduct, 1);
-                Intent intent = new Intent(this, CheckoutActivity.class);
+            // 👇 Xử lý nút Thêm vào giỏ hàng
+            btnAddToCart.setOnClickListener(v -> {
+                // TODO: Thêm sản phẩm vào giỏ hàng (local list, database, ViewModel,...)
+                // Ví dụ: gửi qua Intent đến CartActivity
+                Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+                intent.putExtra("product", product);
                 startActivity(intent);
-            }
-        });
+            });
+
+            // 👇 Xử lý nút Thanh toán ngay
+            btnAddBill.setOnClickListener(v -> {
+                Intent intent = new Intent(ProductDetailActivity.this, CheckoutActivity.class);
+                intent.putExtra("product", product);
+                startActivity(intent);
+            });
+        }
     }
 }
+

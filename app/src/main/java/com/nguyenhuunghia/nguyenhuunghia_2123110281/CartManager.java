@@ -18,9 +18,7 @@ public class CartManager {
         return instance;
     }
 
-    // ================== QUẢN LÝ GIỎ HÀNG ==================
 
-    // Thêm sản phẩm với số lượng mặc định = 1
     public void addToCart(Product product) {
         addToCart(product, 1);
     }

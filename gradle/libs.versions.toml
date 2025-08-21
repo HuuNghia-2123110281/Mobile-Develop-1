@@ -11,6 +11,7 @@ composeBom = "2024.04.01"
 volley = "1.2.1"
 recyclerview = "1.4.0"
 cardview = "1.0.0"
+billing = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +31,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
+billing = { group = "com.google.androidbrowserhelper", name = "billing", version.ref = "billing" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
