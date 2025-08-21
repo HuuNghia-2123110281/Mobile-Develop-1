@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <!-- Header: Chào mừng + Đăng xuất -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,14 +32,13 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-
+    <!-- Search bar -->
     <LinearLayout
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/xanh"
         android:orientation="horizontal"
         android:padding="8dp">
-
 
         <ImageView
             android:layout_width="48dp"
@@ -56,10 +57,9 @@
             android:paddingEnd="8dp"
             android:textSize="14sp"
             android:layout_marginStart="8dp" />
-
-
     </LinearLayout>
 
+    <!-- Danh mục sản phẩm -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,6 +74,16 @@
             android:gravity="center_vertical">
 
             <Button
+                android:id="@+id/btnTatCa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tất cả"
+                android:textSize="10dp"
+                android:layout_marginStart="6dp"/>
+
+
+            <Button
+                android:id="@+id/btnDienThoai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Điện thoại"
@@ -81,13 +91,15 @@
                 android:layout_marginStart="6dp"/>
 
             <Button
+                android:id="@+id/btnLaptop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
                 android:text="Laptop"
-                android:textSize="10dp" />
+                android:textSize="10dp"
+                android:layout_marginStart="6dp"/>
 
             <Button
+                android:id="@+id/btnTablet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tablet"
@@ -95,6 +107,7 @@
                 android:layout_marginStart="6dp"/>
 
             <Button
+                android:id="@+id/btnPhuKien"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Phụ kiện"
@@ -103,13 +116,14 @@
         </LinearLayout>
     </HorizontalScrollView>
 
+    <!-- Danh sách sản phẩm -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProducts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-
+    <!-- Bottom navigation -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -117,7 +131,6 @@
         android:background="#FFFFFF"
         android:weightSum="3"
         android:elevation="4dp">
-
 
         <LinearLayout
             android:layout_width="0dp"
@@ -137,7 +150,6 @@
                 android:layout_width="2dp"/>
         </LinearLayout>
 
-
         <LinearLayout
             android:id="@+id/ivCart"
             android:layout_width="0dp"
@@ -156,7 +168,6 @@
                 android:layout_height="2dp"
                 android:layout_width="2dp"/>
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/ivPerson"

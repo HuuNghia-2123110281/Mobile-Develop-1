@@ -14,16 +14,14 @@ public class Product implements Serializable {
     @SerializedName("price")
     private double price;
 
-
     @SerializedName("imageUrl")
-    private String ImageUrl;
+    private String imageUrl;
 
     @SerializedName("desc")
     private String desc;
 
-    public String getDesc() {
-        return desc != null ? desc : "";
-    }
+    @SerializedName("category")  // thêm trường category
+    private String category;
 
     public String getId() {
         return id;
@@ -38,8 +36,14 @@ public class Product implements Serializable {
     }
 
     public String getImageUrl() {
-        // tránh null pointer
-        return ImageUrl != null ? ImageUrl : "";
+        return imageUrl != null ? imageUrl : "";
     }
 
+    public String getDesc() {
+        return desc != null ? desc : "";
+    }
+
+    public String getCategory() {
+        return category != null ? category : "";
+    }
 }

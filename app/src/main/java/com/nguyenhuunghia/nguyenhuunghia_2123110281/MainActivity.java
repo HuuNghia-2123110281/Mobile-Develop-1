@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,11 +25,13 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     TextView tvGreeting;
-    Button btnBack;
+    Button btnBack, btnTatCa, btnDienThoai, btnLaptop, btnTablet, btnPhuKien;
     EditText edtSearch;
     RecyclerView rv;
     ProductAdapter adapter;
     ArrayList<Product> products;
+
+    private String selectedCategory = "";
 
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
@@ -38,20 +39,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // FindViewById
         tvGreeting = findViewById(R.id.txtWelcome);
         btnBack = findViewById(R.id.btnBack);
         edtSearch = findViewById(R.id.edtSearch);
         rv = findViewById(R.id.rvProducts);
 
-        // Hiển thị lời chào
-        String username = getIntent().getStringExtra("username");
-        if (username != null && !username.trim().isEmpty()) {
-            tvGreeting.setText("Chào mừng, " + username + " !");
-        } else {
-            tvGreeting.setText("Chào mừng bạn!");
-        }
+        btnTatCa = findViewById(R.id.btnTatCa);
+        btnDienThoai = findViewById(R.id.btnDienThoai);
+        btnLaptop = findViewById(R.id.btnLaptop);
+        btnTablet = findViewById(R.id.btnTablet);
+        btnPhuKien = findViewById(R.id.btnPhuKien);
 
-        // Khởi tạo danh sách sản phẩm
+        // Greeting
+        String username = getIntent().getStringExtra("username");
+        tvGreeting.setText(username != null && !username.trim().isEmpty() ?
+                "Chào mừng, " + username + " !" : "Chào mừng bạn!");
+
+        // RecyclerView
         products = new ArrayList<>();
         adapter = new ProductAdapter(products, new ProductAdapter.OnProductActionListener() {
             @Override
@@ -73,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadProductsFromApi();
 
-        // Nút quay lại Login
+        // Nút đăng xuất
         btnBack.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
@@ -81,22 +86,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Icon giỏ hàng
         LinearLayout ivCartLayout = findViewById(R.id.ivCart);
-        ivCartLayout.setOnClickListener(v -> {
-            Intent i = new Intent(MainActivity.this, CartActivity.class);
-            startActivity(i);
-        });
+        ivCartLayout.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
 
         // Icon hồ sơ
         LinearLayout ivPersonLayout = findViewById(R.id.ivPerson);
-        ivPersonLayout.setOnClickListener(v -> {
-            Intent i = new Intent(MainActivity.this, ActivityProfile.class);
-            startActivity(i);
-        });
+        ivPersonLayout.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ActivityProfile.class)));
 
-        // Tìm kiếm sản phẩm theo tên
+        // Text Search
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -104,7 +103,31 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) { }
+        });
+
+        // Button “Tất cả”
+        btnTatCa.setOnClickListener(v -> {
+            adapter.updateData(products);
+        });
+
+
+        // Category Buttons
+        btnDienThoai.setOnClickListener(v -> {
+            selectedCategory = "Điện thoại";
+            filterProducts(edtSearch.getText().toString());
+        });
+        btnLaptop.setOnClickListener(v -> {
+            selectedCategory = "Laptop";
+            filterProducts(edtSearch.getText().toString());
+        });
+        btnTablet.setOnClickListener(v -> {
+            selectedCategory = "Tablet";
+            filterProducts(edtSearch.getText().toString());
+        });
+        btnPhuKien.setOnClickListener(v -> {
+            selectedCategory = "Phụ kiện";
+            filterProducts(edtSearch.getText().toString());
         });
     }
 
@@ -123,17 +146,25 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                Log.e("API_ERROR", t.getMessage(), t);
                 Toast.makeText(MainActivity.this, "Lỗi kết nối API", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // Lọc danh sách sản phẩm theo tên
     private void filterProducts(String keyword) {
         List<Product> filteredList = new ArrayList<>();
         for (Product p : products) {
-            if (p.getName().toLowerCase().contains(keyword.toLowerCase())) {
+            boolean matchesName = p.getName().toLowerCase().contains(keyword.toLowerCase());
+
+            boolean matchesCategory;
+            if (selectedCategory.isEmpty()) {
+                matchesCategory = true; // hiển thị tất cả nếu category rỗng
+            } else {
+                // Nếu product có category từ API
+                matchesCategory = p.getCategory().equalsIgnoreCase(selectedCategory);
+            }
+
+            if (matchesName && matchesCategory) {
                 filteredList.add(p);
             }
         }
