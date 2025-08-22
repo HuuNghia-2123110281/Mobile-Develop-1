@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.Call;
+import retrofit2.http.Query;
 
 public interface ApiService {
     @GET("product")
@@ -23,6 +24,9 @@ public interface ApiService {
     // ✅ Thêm API đăng ký (tạo user mới)
     @POST("users")
     Call<User> createUser(@Body User user);
+
+    @GET("products")
+    Call<List<Product>> getProductsByCategory(@Query("category") String category);
 
     ApiService apiService = new Retrofit.Builder()
             .baseUrl("https://68931a76c49d24bce869717c.mockapi.io/")

@@ -10,7 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
@@ -18,12 +20,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private List<CartItem> cartItems;
     private OnCartChangeListener listener;
 
-    // Interface để CartActivity có thể lắng nghe khi giỏ hàng thay đổi
     public interface OnCartChangeListener {
         void onCartChanged();
     }
 
-    // Constructor nhận listener từ CartActivity
     public CartAdapter(Context context, List<CartItem> cartItems, OnCartChangeListener listener) {
         this.context = context;
         this.cartItems = cartItems;
@@ -42,7 +42,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         CartItem item = cartItems.get(position);
 
         holder.tvName.setText(item.getProduct().getName());
-        holder.tvPrice.setText(item.getProduct().getPrice() + " đ");
+
+        // Hiển thị giá theo VNĐ
+        String formattedPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"))
+                .format(item.getProduct().getPrice());
+        holder.tvPrice.setText(formattedPrice);
+
         holder.tvQty.setText(String.valueOf(item.getQuantity()));
 
         // Nút tăng
@@ -50,12 +55,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             item.increase();
             holder.tvQty.setText(String.valueOf(item.getQuantity()));
             if (listener != null) listener.onCartChanged();
+            notifyItemChanged(position);
         });
 
         // Nút giảm
         holder.btnMinus.setOnClickListener(v -> {
             item.decrease();
-            holder.tvQty.setText(String.valueOf(item.getQuantity()));
+            if (item.getQuantity() <= 0) {
+                cartItems.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, cartItems.size());
+            } else {
+                holder.tvQty.setText(String.valueOf(item.getQuantity()));
+                notifyItemChanged(position);
+            }
             if (listener != null) listener.onCartChanged();
         });
     }

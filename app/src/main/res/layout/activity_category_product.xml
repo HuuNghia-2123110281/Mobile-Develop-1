@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- Tiêu đề danh mục -->
+    <TextView
+        android:id="@+id/tvCategoryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Danh mục"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:textColor="@android:color/black" />
+
+    <!-- Nhóm nút chọn nhanh danh mục -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <Button
+                android:id="@+id/btnAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trang chủ"
+                android:padding="10dp"
+                android:background="@color/xam"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/btnPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Điện thoại"
+                android:layout_marginStart="8dp"
+                android:padding="10dp"
+                android:background="@color/xam"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/btnLaptop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Laptop"
+                android:layout_marginStart="8dp"
+                android:padding="10dp"
+                android:background="@color/xam"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/btnTablet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tablet"
+                android:layout_marginStart="8dp"
+                android:padding="10dp"
+                android:background="@color/xam"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Danh sách sản phẩm -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategoryProducts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp" />
+
+    <!-- Thanh điều hướng dưới cùng -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@android:color/darker_gray">
+
+        <!-- Home -->
+        <LinearLayout
+            android:id="@+id/ivHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_home" />
+        </LinearLayout>
+
+        <!-- Cart -->
+        <LinearLayout
+            android:id="@+id/ivCart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_cart" />
+        </LinearLayout>
+
+        <!-- Profile -->
+        <LinearLayout
+            android:id="@+id/ivPerson"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_person" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

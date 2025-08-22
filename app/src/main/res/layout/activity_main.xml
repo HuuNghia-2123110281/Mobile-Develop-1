@@ -61,58 +61,118 @@
 
     <!-- Danh mục sản phẩm -->
     <HorizontalScrollView
+        android:id="@+id/horizontalScrollCategories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:padding="8dp"
-        android:scrollbars="none">
+        android:layout_below="@id/banner"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:scrollbars="none"
+        android:layout_marginTop="10dp">
 
         <LinearLayout
+            android:id="@+id/layoutCategories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <Button
-                android:id="@+id/btnTatCa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tất cả"
-                android:textSize="10dp"
-                android:layout_marginStart="6dp"/>
 
+            <!-- Category 2 -->
+            <FrameLayout
+                android:id="@+id/frameCategory2"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:layout_marginEnd="12dp"
+                android:clickable="true"
+                android:focusable="true">>
 
-            <Button
-                android:id="@+id/btnDienThoai"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Điện thoại"
-                android:textSize="10dp"
-                android:layout_marginStart="6dp"/>
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="Category 2"
+                    android:clipToOutline="true"
+                    android:clickable="false"
+                    android:focusable="false"/>
 
-            <Button
-                android:id="@+id/btnLaptop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Laptop"
-                android:textSize="10dp"
-                android:layout_marginStart="6dp"/>
+                <TextView
+                    android:id="@+id/txtCategory2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Điện thoại"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:background="#80000000"
+                    android:paddingHorizontal="4dp"
+                    android:paddingVertical="2dp"
+                    android:layout_gravity="center|center_horizontal"
+                    android:gravity="center" />
+            </FrameLayout>
 
-            <Button
-                android:id="@+id/btnTablet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tablet"
-                android:textSize="10dp"
-                android:layout_marginStart="6dp"/>
+            <!-- Category 3 -->
+            <FrameLayout
+                android:id="@+id/frameCategory3"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:layout_marginEnd="12dp"
+                android:clickable="true"
+                android:focusable="true">>
 
-            <Button
-                android:id="@+id/btnPhuKien"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Phụ kiện"
-                android:textSize="10dp"
-                android:layout_marginStart="6dp"/>
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="Category 3"
+                    android:clipToOutline="true"
+                    android:clickable="false"
+                    android:focusable="false"/>
+
+                <TextView
+                    android:id="@+id/txtCategory3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LapTop"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:background="#80000000"
+                    android:paddingHorizontal="4dp"
+                    android:paddingVertical="2dp"
+                    android:layout_gravity="center|center_horizontal"
+                    android:gravity="center" />
+            </FrameLayout>
+
+            <!-- Category 4 -->
+            <FrameLayout
+                android:id="@+id/frameCategory4"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:clickable="true"
+                android:focusable="true">>
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="Category 4"
+                    android:clipToOutline="true"
+                    android:clickable="false"
+                    android:focusable="false"/>
+
+                <TextView
+                    android:id="@+id/txtCategory4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Table"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:background="#80000000"
+                    android:paddingHorizontal="4dp"
+                    android:paddingVertical="2dp"
+                    android:layout_gravity="center|center_horizontal"
+                    android:gravity="center" />
+            </FrameLayout>
+
         </LinearLayout>
     </HorizontalScrollView>
 

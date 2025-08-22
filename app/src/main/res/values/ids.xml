@@ -36,4 +36,10 @@
     <item name="tvUser" type="id" />
     <item name="recyclerCart" type="id" />
     <item name="tvTotal" type="id" />
+    <item name="banner" type="id" />
+    <item name="txtCategoryTitle" type="id" />
+    <item name="frameAll" type="id" />
+    <item name="tvBankInfo" type="id" />
+    <item name="qrImage" type="id" />
+    <item name="btnComplete" type="id" />
 </resources>

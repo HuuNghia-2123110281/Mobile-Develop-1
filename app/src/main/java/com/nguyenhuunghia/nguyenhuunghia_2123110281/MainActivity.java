@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,12 +25,15 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tvGreeting;
-    Button btnBack, btnTatCa, btnDienThoai, btnLaptop, btnTablet, btnPhuKien;
-    EditText edtSearch;
-    RecyclerView rv;
-    ProductAdapter adapter;
-    ArrayList<Product> products;
+    private TextView tvGreeting;
+    private Button btnBack;
+    private EditText edtSearch;
+    private RecyclerView rv;
+    private ProductAdapter adapter;
+    private ArrayList<Product> products;
+
+    FrameLayout frameCategory1, frameCategory2, frameCategory3, frameCategory4;
+    TextView txtCategory1, txtCategory2, txtCategory3, txtCategory4;
 
     private String selectedCategory = "";
 
@@ -45,18 +49,19 @@ public class MainActivity extends AppCompatActivity {
         edtSearch = findViewById(R.id.edtSearch);
         rv = findViewById(R.id.rvProducts);
 
-        btnTatCa = findViewById(R.id.btnTatCa);
-        btnDienThoai = findViewById(R.id.btnDienThoai);
-        btnLaptop = findViewById(R.id.btnLaptop);
-        btnTablet = findViewById(R.id.btnTablet);
-        btnPhuKien = findViewById(R.id.btnPhuKien);
+        frameCategory2 = findViewById(R.id.frameCategory2);
+        txtCategory2   = findViewById(R.id.txtCategory2);
+        frameCategory3 = findViewById(R.id.frameCategory3);
+        txtCategory3   = findViewById(R.id.txtCategory3);
+        frameCategory4 = findViewById(R.id.frameCategory4);
+        txtCategory4   = findViewById(R.id.txtCategory4);
 
-        // Greeting
+        // Greeting user
         String username = getIntent().getStringExtra("username");
-        tvGreeting.setText(username != null && !username.trim().isEmpty() ?
-                "Chào mừng, " + username + " !" : "Chào mừng bạn!");
+        tvGreeting.setText(username != null && !username.trim().isEmpty()
+                ? "Chào mừng, " + username + " !" : "Chào mừng bạn!");
 
-        // RecyclerView
+        // RecyclerView setup
         products = new ArrayList<>();
         adapter = new ProductAdapter(products, new ProductAdapter.OnProductActionListener() {
             @Override
@@ -76,23 +81,26 @@ public class MainActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
 
+        // Load sản phẩm từ API
         loadProductsFromApi();
 
-        // Nút đăng xuất
+        // Đăng xuất
         btnBack.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         });
 
-        // Icon giỏ hàng
+        // Giỏ hàng
         LinearLayout ivCartLayout = findViewById(R.id.ivCart);
-        ivCartLayout.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
+        ivCartLayout.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, CartActivity.class)));
 
-        // Icon hồ sơ
+        // Hồ sơ
         LinearLayout ivPersonLayout = findViewById(R.id.ivPerson);
-        ivPersonLayout.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ActivityProfile.class)));
+        ivPersonLayout.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, ActivityProfile.class)));
 
-        // Text Search
+        // Tìm kiếm theo tên
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -106,29 +114,15 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) { }
         });
 
-        // Button “Tất cả”
-        btnTatCa.setOnClickListener(v -> {
-            adapter.updateData(products);
-        });
-
-
-        // Category Buttons
-        btnDienThoai.setOnClickListener(v -> {
-            selectedCategory = "Điện thoại";
-            filterProducts(edtSearch.getText().toString());
-        });
-        btnLaptop.setOnClickListener(v -> {
-            selectedCategory = "Laptop";
-            filterProducts(edtSearch.getText().toString());
-        });
-        btnTablet.setOnClickListener(v -> {
-            selectedCategory = "Tablet";
-            filterProducts(edtSearch.getText().toString());
-        });
-        btnPhuKien.setOnClickListener(v -> {
-            selectedCategory = "Phụ kiện";
-            filterProducts(edtSearch.getText().toString());
-        });
+        // Lọc theo danh mục
+        frameCategory2.setOnClickListener(v -> openCategory(txtCategory2.getText().toString()));
+        frameCategory3.setOnClickListener(v -> openCategory(txtCategory3.getText().toString()));
+        frameCategory4.setOnClickListener(v -> openCategory(txtCategory4.getText().toString()));
+    }
+    private void openCategory(String categoryName) {
+        Intent intent = new Intent(MainActivity.this, CategoryProductActivity.class);
+        intent.putExtra("category", categoryName); // key phải trùng "category"
+        startActivity(intent);
     }
 
     private void loadProductsFromApi() {
@@ -138,7 +132,8 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     products.clear();
                     products.addAll(response.body());
-                    adapter.notifyDataSetChanged();
+                    selectedCategory = ""; // reset về tất cả
+                    filterProducts("");    // hiển thị toàn bộ
                 } else {
                     Toast.makeText(MainActivity.this, "Không lấy được sản phẩm", Toast.LENGTH_SHORT).show();
                 }
@@ -155,14 +150,8 @@ public class MainActivity extends AppCompatActivity {
         List<Product> filteredList = new ArrayList<>();
         for (Product p : products) {
             boolean matchesName = p.getName().toLowerCase().contains(keyword.toLowerCase());
-
-            boolean matchesCategory;
-            if (selectedCategory.isEmpty()) {
-                matchesCategory = true; // hiển thị tất cả nếu category rỗng
-            } else {
-                // Nếu product có category từ API
-                matchesCategory = p.getCategory().equalsIgnoreCase(selectedCategory);
-            }
+            boolean matchesCategory = selectedCategory.isEmpty()
+                    || p.getCategory().equalsIgnoreCase(selectedCategory);
 
             if (matchesName && matchesCategory) {
                 filteredList.add(p);

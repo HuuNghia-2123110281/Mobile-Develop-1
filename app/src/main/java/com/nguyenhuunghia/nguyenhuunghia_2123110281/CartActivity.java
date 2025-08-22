@@ -3,17 +3,11 @@ package com.nguyenhuunghia.nguyenhuunghia_2123110281;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -37,29 +31,36 @@ public class CartActivity extends AppCompatActivity {
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
         btnCheckout = findViewById(R.id.btnCheckout);
 
-        // Lấy danh sách giỏ hàng
+        // Lấy danh sách giỏ hàng từ CartManager
         cartItems = CartManager.getInstance().getCartItems();
 
-        // Hiển thị giỏ hàng bằng adapter
+        // Adapter và RecyclerView
         recyclerViewCart.setLayoutManager(new LinearLayoutManager(this));
-        cartAdapter = new CartAdapter(this, cartItems, () -> updateTotalPrice());
+        cartAdapter = new CartAdapter(this, cartItems, this::updateTotalPrice);
         recyclerViewCart.setAdapter(cartAdapter);
 
-
-        // Cập nhật tổng tiền
+        // Hiển thị tổng tiền
         updateTotalPrice();
 
-        // Nút thanh toán
+        // Xử lý nút Thanh toán
         btnCheckout.setOnClickListener(v -> {
-            double totalPrice = CartManager.getInstance().getTotalPrice();
-            Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
-            intent.putExtra("totalPrice", totalPrice);
+            double totalAmount = calculateTotalAmount();
+            Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
+            intent.putExtra("total_amount", totalAmount);
             startActivity(intent);
         });
     }
 
+    private double calculateTotalAmount() {
+        double total = 0;
+        for (CartItem item : cartItems) {
+            total += item.getTotalPrice();
+        }
+        return total;
+    }
+
     private void updateTotalPrice() {
-        double total = CartManager.getInstance().getTotalPrice();
+        double total = calculateTotalAmount();
         String formattedPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(total);
         tvTotalPrice.setText("Tổng tiền: " + formattedPrice);
     }
@@ -67,7 +68,6 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Cập nhật lại khi quay về từ CheckoutActivity
         cartAdapter.notifyDataSetChanged();
         updateTotalPrice();
     }

@@ -46,4 +46,5 @@ public class Product implements Serializable {
     public String getCategory() {
         return category != null ? category : "";
     }
+
 }

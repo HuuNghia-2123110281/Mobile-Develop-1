@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.text.NumberFormat;
+import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -39,12 +40,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     // ✅ Sửa đúng: cập nhật danh sách sản phẩm khi tìm kiếm
+    // ✅ Sửa đúng: chỉ dùng productList
     public void updateData(List<Product> newList) {
-        if (newList == null) return;
-        productList.clear();
-        productList.addAll(newList);
+        this.productList.clear();
+        if (newList != null) {
+            this.productList.addAll(newList);
+        }
         notifyDataSetChanged();
     }
+
+
+
 
     // Interface callback
     public interface OnProductActionListener {

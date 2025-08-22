@@ -58,6 +58,9 @@
 
         <!-- ActivityProfile -->
         <activity android:name=".ActivityProfile" />
+        <activity android:name=".CategoryProductActivity"/>
+        <activity android:name=".PaymentActivity" />
+
 
 
     </application>
